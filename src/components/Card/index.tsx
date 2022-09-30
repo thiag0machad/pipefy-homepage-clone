@@ -1,16 +1,16 @@
-import { useDrag } from 'react-dnd'
+import { DragSourceMonitor, useDrag } from 'react-dnd'
 
 import { Container, Label } from './styles'
 
 const Card = ({ data }: any): JSX.Element => {
-  useDrag({
-    item: {},
-    collect: monitor => ({
+  const [{ isDragging }, dragRef] = useDrag({
+    type: 'CARD',
+    collect: (monitor: DragSourceMonitor) => ({
       isDragging: monitor.isDragging(),
     }),
   })
   return (
-    <Container>
+    <Container ref={dragRef} isDragging={isDragging}>
       <header>
         {data.labels.map((label: any) => (
           <Label key={label} color={label} />
